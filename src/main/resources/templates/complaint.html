@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Complaint Viewer</title>
+</head>
+<body>
+<h2>Complaint ID: <span th:text="${complaint.complaintId}"></span></h2>
+<p><strong>Company:</strong> <span th:text="${complaint.company}"></span></p>
+<p><strong>Narrative:</strong></p>
+<p th:text="${complaint.narrative}"></p>
+<p><strong>Date Received:</strong> <span th:text="${complaint.dateReceivedStr}"></span></p>
+<p><strong>Product:</strong> <span th:text="${complaint.product}"></span></p>
+<p><strong>Sub-product:</strong> <span th:text="${complaint.subProduct}"></span></p>
+<p><strong>Issue:</strong> <span th:text="${complaint.issue}"></span></p>
+<p><strong>Sub-issue:</strong> <span th:text="${complaint.subIssue}"></span></p>
+<p><strong>Company Response:</strong> <span th:text="${complaint.publicResponse}"></span></p>
+<p><strong>State:</strong> <span th:text="${complaint.state}"></span></p>
+<p><strong>ZIP code:</strong> <span th:text="${complaint.zipCode}"></span></p>
+
+<hr/>
+
+<h3>Top 3 Most Similar Complaints</h3>
+<ul>
+    <li th:each="similar : ${similarComplaints}">
+        <p><strong>ID:</strong> <span th:text="${similar.complaintId}"></span></p>
+        <p><strong>Company:</strong> <span th:text="${similar.company}"></span></p>
+        <p th:text="${similar.narrative}"></p>
+    </li>
+</ul>
+
+<form action="/jumpToComplaint" method="get" style="margin-top: 20px;">
+    <label for="complaintNumber">Jump to Complaint:</label>
+    <input type="number" id="complaintNumber" name="complaintNumber" min="0" max="[[${complaints.size() - 1}]]" required>
+    <button type="submit">Go</button>
+</form>
+
+<hr/>
+<a th:href="@{|/complaint?index=${prevIndex}|}">⬅ Previous</a> |
+<a th:href="@{|/complaint?index=${nextIndex}|}">Next ➡</a>
+
+</body>
+</html>

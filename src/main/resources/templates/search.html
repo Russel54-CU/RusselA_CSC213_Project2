@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Complaints</title>
+</head>
+<body>
+<h2>Search Complaints by Company</h2>
+
+<!-- Search Form -->
+<form action="/search" method="get">
+    <label for="company">Company Name:</label>
+    <input type="text" id="company" name="company" value="[[${company}]]">
+    <button type="submit">Search</button>
+</form>
+
+<hr/>
+
+<!-- Display Filtered Complaints -->
+<h3>Results:</h3>
+<ul>
+    <li th:each="complaint, iterStat : ${filteredComplaints}">
+        <p><strong>ID:</strong> <span th:text="${complaint.complaintId}"></span></p>
+        <p><strong>Company:</strong> <span th:text="${complaint.company}"></span></p>
+        <p><strong>Narrative:</strong> <span th:text="${complaint.narrative}"></span></p>
+        <a th:href="@{|/complaint?index=${iterStat.index}|}">View Complaint</a>
+    </li>
+</ul>
+
+<a href="/complaint">Back to Complaints</a>
+</body>
+</html>
+
